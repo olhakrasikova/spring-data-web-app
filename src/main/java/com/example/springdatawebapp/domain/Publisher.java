@@ -5,10 +5,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -17,18 +17,18 @@ import java.util.Objects;
 @AllArgsConstructor
 public class Publisher {
     @Id
-    @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     private String name;
-
     private String addressLine1;
-
     private String city;
-
     private String state;
-
     private String zip;
+
+    @OneToMany
+    @JoinColumn(name = "publisher_id")
+    private Set<Book> books = new HashSet<>();
 
     @Override
     public String toString() {
